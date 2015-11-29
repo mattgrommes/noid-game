@@ -26,6 +26,9 @@ public class NoidsMain {
             .registry(Guice.registry(b -> b.module(HandlebarsModule.class)))
             .serverConfig(c -> c.baseDir(BaseDir.find()))
             .handlers(chain -> chain
+                .prefix("noids", noidChain -> noidChain
+                    .get(new NoidHandler())
+                )
                 .get(ctx -> ctx.render(handlebarsTemplate("index.html")))
                 .get("name", new NameHandler())
                 .post(ctx -> ctx.render("Hello POST"))
